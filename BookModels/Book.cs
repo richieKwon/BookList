@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -7,6 +9,7 @@ namespace BookModels
     public class Book
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         
         [MaxLength(255)]
@@ -14,5 +17,8 @@ namespace BookModels
         public  string Title { get; set; }
         
         public string Description { get; set; }
+
+        [DefaultValue("DateTime()")]
+        public DateTime Created { get; set; }
     }
 }  
