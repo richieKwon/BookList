@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 
 namespace BookModels
 {
-    public interface ICrudRepositoryBase<T, Iidentifier>
+    public interface ICrudRepositoryBase<T, Tidentifier>
     {
         Task<T> AddAsync(T model);
         Task<List<T>> GetAllAsync();
-        Task<T> GetByIdAsync(Iidentifier id);
+        Task<T> GetByIdAsync(Tidentifier id);
         Task<bool> UpdateAsync(T model);
-        Task<bool> DeleteAsync(Iidentifier id);
+        Task<bool> DeleteAsync(Tidentifier id);
     }
 
     public interface IBookCrudRepository<T> : ICrudRepositoryBase<T, int>

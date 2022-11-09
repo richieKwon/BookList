@@ -17,8 +17,6 @@ namespace BookModels
         public  string Title { get; set; }
         
         public string Description { get; set; }
-
-        [DefaultValue("DateTime()")]
         public DateTime Created { get; set; }
     }
 }  

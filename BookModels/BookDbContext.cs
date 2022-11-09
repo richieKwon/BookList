@@ -1,5 +1,6 @@
 using System;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Protocols;
 
 namespace BookModels
@@ -7,8 +8,8 @@ namespace BookModels
     public class BookDbContext : DbContext
     {
         public DbSet<Book> Books { get; set; }
-        
-        public BookDbContext()
+
+        public BookDbContext(IConfiguration configuration)
         {
             // empty
         }
