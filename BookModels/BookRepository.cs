@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Dul.Articles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -97,5 +98,27 @@ namespace BookModels
         }
 
         #endregion
+
+        #region GetArticleAsync
+
+        public Task<ArticleSet<Book, int>> GetArticlesAsync<TParentIdentifier>(int pageIndex, int pageSize, string searchField, string searchQuery,
+            string sortOrder, TParentIdentifier parentIdentifier)
+        {
+            throw new NotImplementedException();
+        }
+        
+        #endregion
+
+        #region GetAllAsync
+
+        public Task<ArticleSet<Book, int>> GetAllAsync<TParentIdentifier>(int pageIndex, int pageSize, string searchField, string searchQuery,
+            string sortOrder, TParentIdentifier parentIdentifier)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
+       
     }
 }

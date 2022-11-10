@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "CddUa0NEKInM+EZFxVSsHrTuXSJZex10UCahb7WCwHfLHqzUWoRm0+7Nt3kVwU0Ap+Wk/gbdCzY2jGYrqHSu/Q==",
+  "dgSpecHash": "jDgkLDPlrbiNjpFUMQGLr5zUkgyOdkBVpK1ll47mF1ty176hmpE5wDSvkrV5bGhGRtdqSZzDvfkOV6/cZtrLsA==",
   "success": true,
   "projectFilePath": "/Users/richie/RiderProjects/BookList/BookModels/BookModels.csproj",
   "expectedPackageFiles": [
+    "/Users/richie/.nuget/packages/dul/1.3.0/dul.1.3.0.nupkg.sha512",
     "/Users/richie/.nuget/packages/humanizer.core/2.8.26/humanizer.core.2.8.26.nupkg.sha512",
     "/Users/richie/.nuget/packages/microsoft.aspnetcore.cryptography.internal/5.0.9/microsoft.aspnetcore.cryptography.internal.5.0.9.nupkg.sha512",
     "/Users/richie/.nuget/packages/microsoft.aspnetcore.cryptography.keyderivation/5.0.9/microsoft.aspnetcore.cryptography.keyderivation.5.0.9.nupkg.sha512",
