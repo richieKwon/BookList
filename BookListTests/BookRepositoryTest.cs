@@ -50,7 +50,6 @@ namespace BookListTests
 
                 #endregion
 
-
                 #region GetAllAsync Test
 
                 using (var context = new BookDbContext(options))
@@ -69,10 +68,48 @@ namespace BookListTests
                     var models = await repository.GetAllAsync();
                     Assert.AreEqual(3, models.Count());
                 }
-             
+              
                 #endregion
-                
-                
+
+                #region GetByIdAsync Test
+              
+                using (var context = new BookDbContext(options))
+                {
+                    var repository = new BookRepository(context, factory);
+                    var model = await repository.GetByIdAsync(2);
+                    Assert.IsTrue(model.Title.Contains("Data"));
+                    Assert.AreEqual("BigData with Spark", model.Description);
+                }
+                #endregion
+
+                #region UpdateAsync Test
+
+                using (var context = new BookDbContext(options))
+                {
+                    var repository = new BookRepository(context, factory);
+                    var model = await repository.GetByIdAsync(2);
+                    model.Title = "C++";
+                    await repository.UpdateAsync(model);
+
+                    var updatedModel = await repository.GetByIdAsync(2);
+                    Assert.IsTrue(updatedModel.Title.Contains("++"));
+                    Assert.AreEqual("C++", updatedModel.Title);
+                    
+                }
+                #endregion
+
+                #region DeleteAsync Test
+
+                using (var context = new BookDbContext(options))
+                {
+                    var repository = new BookRepository(context, factory);
+                    await repository.DeleteAsync(2);
+                    
+                    Assert.AreEqual(2, (await context.Books.CountAsync()));
+                    Assert.IsNull(await repository.GetByIdAsync(2));
+                }
+
+                #endregion
             }
         }
     }
