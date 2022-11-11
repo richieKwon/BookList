@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Protocols;
@@ -9,9 +10,9 @@ namespace BookModels
     {
         public DbSet<Book> Books { get; set; }
 
-        public BookDbContext(IConfiguration configuration)
+        public BookDbContext()
         {
-            // empty
+            
         }
 
         public BookDbContext(DbContextOptions<BookDbContext> options) 
@@ -19,6 +20,7 @@ namespace BookModels
         {
             
         }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

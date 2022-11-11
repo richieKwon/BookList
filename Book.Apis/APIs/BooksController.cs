@@ -1,0 +1,72 @@
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using BookModels;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Book = BookModels.Book;
+
+namespace Books.Apis.Controllers
+{
+    [ApiController]
+    [Route("api/[controller]")]
+    [Produces("application/json")]
+    public class BooksController : ControllerBase
+    {
+        private readonly IBookRepository _repository;
+        private readonly ILogger _logger;
+
+        public BooksController(IBookRepository repository, ILoggerFactory loggerFactory)
+        {    
+            _repository = repository ?? throw new ArgumentException(nameof(BooksController));
+            _logger = loggerFactory.CreateLogger(nameof( BooksController));
+        }
+ 
+         #region Get api/books
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            try
+            {
+                var models = await _repository.GetAllAsync();
+                if (!models.Any())
+                {
+                    return new NoContentResult();
+                }
+                return Ok(models); // 200 OK
+
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return BadRequest();
+            }
+        }
+        #endregion
+
+        #region GetById api/books/1
+
+        [HttpGet("{id:int}", Name = "GetBookById")]
+        public async Task<IActionResult> GetById([FromRoute]int id)
+        {
+            try
+            {
+                var model = await _repository.GetByIdAsync(id);
+                if (model == null)
+                {
+                    return NotFound(); // 204 NotFound
+                }
+
+                return Ok(model);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return BadRequest();
+            }
+        }
+
+        #endregion
+    }
+}
