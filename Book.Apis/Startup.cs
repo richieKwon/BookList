@@ -37,6 +37,39 @@ namespace Book.Apis
 
 
             AddDependencyInjectionContainerForBookList(services);
+            
+            // CORS 
+            #region CORS
+
+            // // Allowing all
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+                options.AddPolicy("AllowAnyOrigin", builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
+            
+            // Allowing all
+            // services.AddCors(o => o.AddPolicy("AllowAllPolicy", options =>
+            // {
+            //     options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            // }));
+
+            // Allowing specific domains
+            // services.AddCors(o => o.AddPolicy("AllowSpecific", options =>
+            // {
+            //     options.WithOrigins("https://localhost:5001")
+            //         .WithMethods("GET", "POST", "PUT", "PATCH", "DELETE")
+            //         .WithHeaders("accept", "content-type", "origin", "X-TotalRecordCount");
+            // }));
+
+            #endregion
+
         }
 
         // Managing DependencyInjection  
@@ -70,6 +103,8 @@ namespace Book.Apis
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
         }

@@ -17,11 +17,11 @@ namespace Books.Apis.Controllers
         private readonly ILogger _logger;
 
         public BooksController(IBookRepository repository, ILoggerFactory loggerFactory)
-        {    
+        {
             _repository = repository ?? throw new ArgumentException(nameof(BooksController));
-            _logger = loggerFactory.CreateLogger(nameof( BooksController));
+            _logger = loggerFactory.CreateLogger(nameof(BooksController));
         }
- 
+
         #region Get api/books
 
         [HttpGet]
@@ -34,6 +34,7 @@ namespace Books.Apis.Controllers
                 {
                     return new NoContentResult();
                 }
+
                 return Ok(models); // 200 OK
 
             }
@@ -43,12 +44,13 @@ namespace Books.Apis.Controllers
                 return BadRequest();
             }
         }
+
         #endregion
 
         #region GetById api/books/1
 
         [HttpGet("{id:int}", Name = "GetBookById")]
-        public async Task<IActionResult> GetById([FromRoute]int id)
+        public async Task<IActionResult> GetById([FromRoute] int id)
         {
             try
             {
@@ -91,12 +93,65 @@ namespace Books.Apis.Controllers
                 {
                     return BadRequest();
                 }
+
                 return CreatedAtAction(nameof(GetById), new { id = model.Id }, model);
             }
             catch (Exception e)
             {
-              _logger.LogError(e.Message);
-              return BadRequest();
+                _logger.LogError(e.Message);
+                return BadRequest();
+            }
+        }
+
+        #endregion
+
+        #region UpdateAsnyc
+
+        // Put api/books/123
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] BookModels.Book dto)
+        {
+            if (dto == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            try
+            {
+                dto.Id = id;
+                var status = await _repository.UpdateAsync(dto);
+                if (!status) BadRequest();
+                return NoContent(); // 204 No content
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return BadRequest();
+            }
+        }
+
+        #endregion
+
+        #region DeleteAsync
+
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            try
+            {
+                var status = await _repository.DeleteAsync(id);
+                if (!status) BadRequest();
+                return NoContent();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.Message);
+                return BadRequest();
             }
         }
         #endregion
