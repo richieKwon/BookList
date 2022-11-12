@@ -22,7 +22,7 @@ namespace Books.Apis.Controllers
             _logger = loggerFactory.CreateLogger(nameof( BooksController));
         }
  
-         #region Get api/books
+        #region Get api/books
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -67,6 +67,38 @@ namespace Books.Apis.Controllers
             }
         }
 
+        #endregion
+
+        #region AddAsync
+
+        [HttpPost]
+        public async Task<IActionResult> AddAsync([FromBody] BookModels.Book dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            var temp = new BookModels.Book();
+            temp.Title = dto.Title;
+            temp.Description = dto.Title;
+            temp.Created = DateTime.Now;
+
+            try
+            {
+                var model = await _repository.AddAsync(temp);
+                if (model == null)
+                {
+                    return BadRequest();
+                }
+                return CreatedAtAction(nameof(GetById), new { id = model.Id }, model);
+            }
+            catch (Exception e)
+            {
+              _logger.LogError(e.Message);
+              return BadRequest();
+            }
+        }
         #endregion
     }
 }
